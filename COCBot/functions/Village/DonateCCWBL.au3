@@ -31,6 +31,9 @@ Func donateCCWBLUserImageCollect($x, $y)
 		For $i = 1 To UBound($xyz) - 1
 			Local $result = FindImageInPlace("DCCWBL", $g_sProfileDonateCaptureWhitelistPath & $xyz[$i], "0," & $y - 90 & "," & $x - 30 & "," & $y, False)
 			If StringInStr($result, ",") > 0 Then
+				;Local $splitedPosition = StringSplit($result, ",", 2)
+				;Local $xfound = Int($splitedPosition[0])
+				;Local $yfound = Int($splitedPosition[1])
 				If $g_iCmbDonateFilter = 2 Then Setlog("WHITE LIST: image match! " & $xyz[$i], $COLOR_SUCCESS)
 				$imagematch = True
 				If $g_iCmbDonateFilter = 2 Then Return True ; <=== return DONATE if name found in white list
@@ -38,6 +41,7 @@ Func donateCCWBLUserImageCollect($x, $y)
 			EndIf
 		Next
 	EndIf
+
 
 	;if OnlyBlackList enable check and donate
 	If $g_iDebugSetlog = 1 Then Setlog("Search into blacklist...", $color_purple)
@@ -47,6 +51,8 @@ Func donateCCWBLUserImageCollect($x, $y)
 		For $i = 1 To UBound($xyz1) - 1
 			Local $result1 = FindImageInPlace("DCCWBL", $g_sProfileDonateCaptureBlacklistPath & $xyz1[$i], "0," & $y - 90 & "," & $x - 30 & "," & $y, False)
 			If StringInStr($result1, ",") > 0 Then
+				;Local $xfound = Int(StringSplit($result1, ",", 2)[0])
+				;Local $yfound = Int(StringSplit($result1, ",", 2)[1])
 				If $g_iCmbDonateFilter = 3 Then Setlog("BLACK LIST: image match! " & $xyz1[$i], $COLOR_SUCCESS)
 				$imagematch = True
 				If $g_iCmbDonateFilter = 3 Then Return False ; <=== return NO DONATE if name found in black list
@@ -57,6 +63,7 @@ Func donateCCWBLUserImageCollect($x, $y)
 		Next
 	EndIf
 
+
 	If $imagematch = False And $g_iCmbDonateFilter > 0 Then
 		If $g_iDebugSetlog = 1 Then Setlog("Search into images to assign...", $color_purple)
 		;try to search into images to Assign
@@ -66,6 +73,8 @@ Func donateCCWBLUserImageCollect($x, $y)
 			For $i = 1 To UBound($xyzw) - 1
 				Local $resultxyzw = FindImageInPlace("DCCWBL", $g_sProfileDonateCapturePath & $xyzw[$i], "0," & $y - 90 & "," & $x - 30 & "," & $y, False)
 				If StringInStr($resultxyzw, ",") > 0 Then
+					;Local $xfound = Int(StringSplit($resultxyzw, ",", 2)[0])
+					;Local $yfound = Int(StringSplit($resultxyzw, ",", 2)[1])
 					If $g_iCmbDonateFilter = 1 Or $g_iDebugSetlog = 1 Then Setlog("IMAGES TO ASSIGN: image match! " & $xyzw[$i], $COLOR_SUCCESS)
 					$imagematch = True
 					ExitLoop
@@ -94,7 +103,7 @@ Func donateCCWBLUserImageCollect($x, $y)
 					Local $xfound = Int(StringSplit($reshidden, ",", 2)[0])
 					Local $yfound = Int(StringSplit($reshidden, ",", 2)[1])
 					If $g_iDebugSetlog = 1 Then
-					   SetLog("ChatDivider hidden found (" & $xfound & "," & $yfound & ")", $COLOR_SUCCESS)
+						SetLog("ChatDivider hidden found (" & $xfound & "," & $yfound & ")", $COLOR_SUCCESS)
 					EndIf
 
 					; now crop image to have only request village name and put in $hClone
@@ -116,11 +125,12 @@ Func donateCCWBLUserImageCollect($x, $y)
 					_GDIPlus_BitmapDispose($oBitmap)
 				EndIf
 			Else
+
 				Local $xfound = Int(StringSplit($res, ",", 2)[0])
 				Local $yfound = Int(StringSplit($res, ",", 2)[1])
 				If $g_iDebugSetlog = 1 Then
-				   SetLog("ChatDivider found (" & $xfound & "," & $yfound & ")", $COLOR_SUCCESS)
-			    EndIf
+					SetLog("ChatDivider found (" & $xfound & "," & $yfound & ")", $COLOR_SUCCESS)
+				EndIf
 
 				; now crop image to have only request village name and put in $hClone
 				Local $oBitmap = _GDIPlus_BitmapCreateFromHBITMAP($hHBitmap2)

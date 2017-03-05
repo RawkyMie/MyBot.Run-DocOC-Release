@@ -23,7 +23,7 @@ Global $g_hLblResultElixirNow = 0, $g_hLblResultElixirHourNow = 0, $g_hPicResult
 Global $g_hLblResultDENow = 0, $g_hLblResultDEHourNow = 0, $g_hPicResultDENow = 0, $g_hPicResultDETemp = 0
 Global $g_hLblResultTrophyNow = 0, $g_hPicResultTrophyNow = 0, $g_hLblResultRuntimeNow = 0, $g_hPicResultRuntimeNow = 0, $g_hLblResultBuilderNow = 0, $g_hPicResultBuilderNow = 0
 Global $g_hLblResultAttackedHourNow = 0, $g_hPicResultAttackedHourNow = 0, $g_hLblResultGemNow = 0, $g_hPicResultGemNow = 0, $g_hLblResultSkippedHourNow = 0, $g_hPicResultSkippedHourNow = 0
-Global $g_hLblVillageReportTemp = 0, $g_hBtnTestVillage = 0
+Global $g_hLblVillageReportTemp = 0, $g_hBtnTestVillage = 0, $g_hbtnDebug = 0
 
 Func CreateBottomPanel()
    Local $sTxtTip = ""
@@ -69,12 +69,18 @@ Func CreateBottomPanel()
 		   _GUICtrlSetTip(-1, GetTranslated(602,29, "Use this to embed the Android Window into Bot."))
 		   If $g_bBtnColor Then GUICtrlSetBkColor(-1, 0x22C4F5)
 		   GUICtrlSetState(-1, $GUI_DISABLE)
-	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 180, 24)
+	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 90, 24)
 		   GUICtrlSetFont(-1, 7)
 		   _GUICtrlSetTip(-1, GetTranslated(602,16, "Check this to ENABLE the Background Mode of the Bot.") & @CRLF & _
 						      GetTranslated(602,17, "With this you can also hide the Android Emulator window out of sight."))
 		   GUICtrlSetOnEvent(-1, "chkBackground")
 		   GUICtrlSetState(-1, (($g_bAndroidAdbScreencap = True) ? ($GUI_CHECKED) : ($GUI_UNCHECKED)))
+
+		$g_hbtnDebug = GUICtrlCreateButton(GetTranslated(602,100, "Debug"), $x + 100, $y + 72, 80, -1)
+			_GUICtrlSetTip(602,101, "Use this to make a zip with necessary folders to report a issue!.")
+			GUICtrlSetBkColor(-1, 0xf7754e)
+			GUICtrlSetOnEvent($g_hbtnDebug, "btnReport")
+
 	   $g_hLblDonate = GUICtrlCreateLabel(GetTranslated(601,19,"Support the development"), $x + 224, $y + 80, 220, 24, $SS_RIGHT)
 		   GUICtrlSetCursor(-1, 0) ; https://www.autoitscript.com/autoit3/docs/functions/MouseGetCursor.htm
 		   GUICtrlSetFont(-1, 8.5, $FW_BOLD) ;, $GUI_FONTITALIC + $GUI_FONTUNDER)
@@ -103,6 +109,7 @@ Func CreateBottomPanel()
    ;~ Village
    Local $x = 295, $y = $y_bottom + 20
    $g_hGrpVillage = GUICtrlCreateGroup(GetTranslated(603,32, "Village"), $x - 20, $y - 20, 180, 85)
+
 	   $g_hLblResultGoldNow = GUICtrlCreateLabel("", $x - 5, $y + 2, 60, 15, $SS_RIGHT)
 	   $g_hLblResultGoldHourNow = GUICtrlCreateLabel("", $x, $y + 2, 60, 15, $SS_RIGHT)
 		   GUICtrlSetState(-1, $GUI_HIDE)
@@ -125,6 +132,12 @@ Func CreateBottomPanel()
 	   $x += 75
 	   ;trophy / runtime
 	   $g_hLblResultTrophyNow = GUICtrlCreateLabel("", $x, $y + 2, 55, 15, $SS_RIGHT)
+	   
+; ====Small mod change for pop out Move Icon======	   
+	   $g_icnPopOutSW[0] 		= GUICtrlCreateIcon($g_sLibIconPath, $eIcnMove, $x + 60,  $y - 12, 12, 12)
+		   GUICtrlSetOnEvent($g_icnPopOutSW[0],"PopOut0")	   
+; ================================================	 
+  
 	   $g_hPicResultTrophyNow = GUICtrlCreateIcon ($g_sLibIconPath, $eIcnTrophy, $x + 59, $y , 16, 16)
 	   $g_hLblResultRuntimeNow = GUICtrlCreateLabel("00:00:00", $x, $y + 2, 50, 15, $SS_RIGHT)
 	   GUICtrlSetState(-1, $GUI_HIDE)

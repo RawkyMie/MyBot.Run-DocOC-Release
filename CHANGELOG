@@ -1,14 +1,12 @@
 ﻿* **V7.0.1**
- * Fix AutoIt Errors/crashes when checking donate request due variable not defined
- * Fix Meet One Condition For Attack GUI Setting
+ * Fix AutoIt Error Line 50696 when checking donate request
+ * Fix Meet one Condition For Attack GUI Setting
  * Fix Wrong Bowler Troop Space and Archer Train Time
  * Fix Delete Queued Spells on Quick Train
  * Fix Custom Train Order not working
  * Fix Wall upgrade issues where wall is upgraded, but reports no upgrade possible
  * Fix GUI issues with Quick Train, CSV Script red line method, and training time
- * Fix bot crash when debug log was enabled manually in script
- * Fix unnecessary repeated hero activation when certain end battle options used
- * Improve console log messaging
+ * Fix Log when debug log was enabled manually in script
  * Update Vietnamese Language File (by @NguyenAnhHD)
 
 * **V7.0**

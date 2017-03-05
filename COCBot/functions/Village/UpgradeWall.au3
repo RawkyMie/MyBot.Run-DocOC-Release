@@ -93,7 +93,7 @@ Func UpgradeWallGold()
 				SetLog("Upgrade stopped due no loot", $COLOR_ERROR)
 				Return False
 			EndIf
-			Click(440, 480 + $g_iMidOffsetY, 1, 0, "#0317")
+			Click(440, 480 + $g_imidOffsetY, 1, 0, "#0317")
 			If _Sleep(1000) Then Return
 			If isGemOpen(True) Then
 				ClickP($aAway, 1, 0, "#0314") ; click away
@@ -134,7 +134,7 @@ Func UpgradeWallElixir()
 				SetLog("Upgrade stopped due to insufficient loot", $COLOR_ERROR)
 				Return False
 			EndIf
-			Click(440, 480 + $g_iMidOffsetY, 1, 0, "#0318")
+			Click(440, 480 + $g_imidOffsetY, 1, 0, "#0317")
 			If _Sleep(1000) Then Return
 			If isGemOpen(True) Then
 				ClickP($aAway, 1, 0, "#0314") ; click away
@@ -181,8 +181,7 @@ Func SkipWallUpgrade() ; Dynamic Upgrades
 	For $iz = 0 To UBound($g_avBuildingUpgrades, 1) - 1 ; loop through all upgrades to see if any are enabled.
 		If $g_abBuildingUpgradeEnable[$iz] = True Then $iUpgradeAction += 1 ; count number enabled
 	Next
-
-	If $iFreeBuilderCount > ($g_bUpgradeWallSaveBuilder ? 1 : 0) And $iUpgradeAction > 0 Then  ; check if builder available for bldg upgrade, and upgrades enabled
+	If $iFreeBuilderCount > ($g_bUpgradeWallSaveBuilder ? 1 : 0) And $iUpgradeAction > 0 Then ; check if builder available for bldg upgrade, and upgrades enabled
 		For $iz = 0 To UBound($g_avBuildingUpgrades, 1) - 1
 			; internal check if builder still available, if loop index upgrade slot is enabled, and if repeat upgrade is done/ready for next upgrade
 			If $iAvailBuilderCount > ($g_bUpgradeWallSaveBuilder ? 1 : 0) And $g_abBuildingUpgradeEnable[$iz] = True And ($g_avBuildingUpgrades[$iz][7] = "" And $g_abUpgradeRepeatEnable[$iz]) Then
@@ -246,7 +245,7 @@ Func SkipWallUpgrade() ; Dynamic Upgrades
 			EndIf
 		Next
 		Local $LabElixirNeeded = $iLaboratoryElixirCost
-		If  $LabElixirNeeded = 0 Then  $LabElixirNeeded = "unknown" ; trap error condition of unknown value
+		If $LabElixirNeeded = 0 Then $LabElixirNeeded = "unknown" ; trap error condition of unknown value
 		Switch $g_iUpgradeWallLootType
 			Case 0 ; Using gold
 				; do nothing

@@ -121,6 +121,9 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
     ; <><><><> Bot / Stats <><><><>
     ; <<< nothing here >>>
 
+    ; <><><> DocOc <><><>
+    ApplyConfig_DocOc($TypeReadSave)
+
     ; <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 
@@ -341,6 +344,9 @@ Func ApplyConfig_600_12($TypeReadSave)
 			GUICtrlSetState($g_hChkExtraAlphabets, $g_bChkExtraAlphabets ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkExtraChinese, $g_bChkExtraChinese ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkExtraKorean, $g_bChkExtraKorean ? $GUI_CHECKED : $GUI_UNCHECKED)
+
+			GUICtrlSetData($g_hTxtGeneralBlacklist, $g_sTxtGeneralBlacklist)
+
 		Case "Save"
 			$g_bChkDonate = (GUICtrlRead($g_hChkDonate) = $GUI_CHECKED)
 			For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
@@ -387,10 +393,6 @@ Func ApplyConfig_600_13($TypeReadSave)
 			GUICtrlSetState($g_hChkSkipDonateNearFullTroopsEnable, $g_bDonateSkipNearFullEnable ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtSkipDonateNearFullTroopsPercentage, $g_iDonateSkipNearFullPercent)
 			chkskipDonateNearFulLTroopsEnable()
-			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
-			chkBalanceDR()
 		Case "Save"
 			$g_bDonateHoursEnable = (GUICtrlRead($g_hChkDonateHoursEnable) = $GUI_CHECKED)
 			For $i = 0 To 23
@@ -399,9 +401,6 @@ Func ApplyConfig_600_13($TypeReadSave)
 			$g_iCmbDonateFilter = _GUICtrlComboBox_GetCurSel($g_hCmbFilterDonationsCC)
 			$g_bDonateSkipNearFullEnable = (GUICtrlRead($g_hChkSkipDonateNearFullTroopsEnable) = $GUI_CHECKED)
 			$g_iDonateSkipNearFullPercent = Number(GUICtrlRead($g_hTxtSkipDonateNearFullTroopsPercentage))
-			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
-			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
-			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 	EndSwitch
 EndFunc
 
@@ -1007,6 +1006,10 @@ Func ApplyConfig_600_29($TypeReadSave)
 			Next
 			GUICtrlSetState($g_hChkDropCCHoursEnable, $iPlannedDropCCHoursEnable = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkDropCCHoursEnable()
+			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
+			chkBalanceDR()
 			For $i = 0 To 23
 				GUICtrlSetState($g_ahChkDropCCHours[$i], $iPlannedDropCCHours[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			Next
@@ -1014,7 +1017,7 @@ Func ApplyConfig_600_29($TypeReadSave)
 			$iActivateKQCondition = GUICtrlRead($g_hRadManAbilities) = $GUI_CHECKED ? "Manual" : "Auto"
 			$delayActivateKQ = GUICtrlRead($g_hTxtManAbilities) * 1000
 			$iActivateWardenCondition = GUICtrlRead($g_hChkUseWardenAbility) = $GUI_CHECKED ? 1 : 0
-			$g_hTxtWardenAbility = GUICtrlRead($g_hTxtWardenAbility) * 1000
+			$delayActivateW = GUICtrlRead($g_hTxtWardenAbility) * 1000
 			$ichkAttackPlannerEnable = GUICtrlRead($g_hChkAttackPlannerEnable) = $GUI_CHECKED ? 1 : 0
 			$ichkAttackPlannerCloseCoC = GUICtrlRead($g_hChkAttackPlannerCloseCoC) = $GUI_CHECKED ? 1 : 0
 			$ichkAttackPlannerCloseAll = GUICtrlRead($g_hChkAttackPlannerCloseAll) = $GUI_CHECKED ? 1 : 0
@@ -1032,6 +1035,9 @@ Func ApplyConfig_600_29($TypeReadSave)
 				$iPlannedattackHours[$i] = GUICtrlRead($g_ahChkAttackHours[$i]) = $GUI_CHECKED ? 1 : 0
 			Next
 			$iPlannedDropCCHoursEnable = GUICtrlRead($g_hChkDropCCHoursEnable) = $GUI_CHECKED ? 1 : 0
+			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
+			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
+			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 			Local $string = ""
 			For $i = 0 To 23
 				$iPlannedDropCCHours[$i] = GUICtrlRead($g_ahChkDropCCHours[$i]) = $GUI_CHECKED ? 1 : 0
@@ -1128,6 +1134,7 @@ Func ApplyConfig_600_29_DB_Standard($TypeReadSave)
 			$g_abAttackStdSmartNearCollectors[$DB][1] = (GUICtrlRead($g_hChkAttackNearElixirCollectorDB) = $GUI_CHECKED)
 			$g_abAttackStdSmartNearCollectors[$DB][2] = (GUICtrlRead($g_hChkAttackNearDarkElixirDrillDB) = $GUI_CHECKED)
 	EndSwitch
+	cmbDeployDB()
 EndFunc
 
 Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
@@ -1373,6 +1380,8 @@ Func ApplyConfig_600_29_LB_Standard($TypeReadSave)
 			$g_abAttackStdSmartNearCollectors[$LB][1] = (GUICtrlRead($g_hChkAttackNearElixirCollectorAB) = $GUI_CHECKED)
 			$g_abAttackStdSmartNearCollectors[$LB][2] = (GUICtrlRead($g_hChkAttackNearDarkElixirDrillAB) = $GUI_CHECKED)
 	EndSwitch
+
+	cmbDeployAB()
 EndFunc
 
 Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
@@ -1888,4 +1897,3 @@ Func ApplyConfig_641_1($TypeReadSave)
 			$g_iTrainAddRandomDelayMax = GUICtrlRead($g_hTxtAddRandomDelayMax)
 	EndSwitch
 EndFunc
-

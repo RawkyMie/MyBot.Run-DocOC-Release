@@ -232,6 +232,10 @@ Func ReadRegularConfig()
 
    ; <><><><> Bot / Stats <><><><>
    ; <<< nothing here >>>
+
+   ; <><><> Attack Plan / Train Army / Options <><><>
+   ReadConfig_DocOc()
+   
 EndFunc
 
 Func ReadConfig_Debug()

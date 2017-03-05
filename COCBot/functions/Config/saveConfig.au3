@@ -169,6 +169,9 @@ Func SaveRegularConfig()
    ; <><><><> Bot / Stats <><><><>
    ; <<< nothing here >>>
 
+   ; <><><><> DocOc MOD <><><><>
+   SaveConfig_DocOc()
+
 	If $hFile <> -1 Then FileClose($hFile)
 
 EndFunc
@@ -616,7 +619,7 @@ Func SaveConfig_600_29()
 	IniWriteS($g_sProfileConfigPath, "attack", "ActivateKQ", $iActivateKQCondition)
 	IniWriteS($g_sProfileConfigPath, "attack", "delayActivateKQ", $delayActivateKQ)
 	IniWriteS($g_sProfileConfigPath, "attack", "ActivateWarden", $iActivateWardenCondition)
-	IniWriteS($g_sProfileConfigPath, "attack", "delayActivateW", $g_hTxtWardenAbility)
+	IniWriteS($g_sProfileConfigPath, "attack", "delayActivateW", $delayActivateW)
 	IniWriteS($g_sProfileConfigPath, "planned", "chkAttackPlannerEnable", $ichkAttackPlannerEnable)
 	IniWriteS($g_sProfileConfigPath, "planned", "chkAttackPlannerCloseCoC", $ichkAttackPlannerCloseCoC)
 	IniWriteS($g_sProfileConfigPath, "planned", "chkAttackPlannerCloseAll", $ichkAttackPlannerCloseAll)

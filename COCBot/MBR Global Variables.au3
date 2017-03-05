@@ -418,7 +418,8 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 			$eHdV11, $eUnranked, $eBronze, $eSilver, $eGold, $eCrystal, $eMaster, $eChampion, $eTitan, $eLegend, _
 			$eWall04, $eWall05, $eWall06, $eWall07, $eWall08, $eWall09, $eWall10, $eWall11, $eIcnPBNotify, $eIcnCCTroops, _
 			$eIcnCCSpells, $eIcnSpellsGroup, $eBahasaIND, $eChinese_S, $eChinese_T, $eEnglish, $eFrench, $eGerman, $eItalian, $ePersian, _
-			$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean
+			$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean, $eModIcon, _
+			$eIcnBrain, $eIcnChat, $eIcnSwords, $eIcnLoop, $eIcnRepeat, $eIcnClan, $eIcnBug, $eIcnDelete, $eIcnMultiStat, $eIcnMove, $eIcnStats
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -970,25 +971,29 @@ Global $LootFileName = ""
 ; Stats
 Global $iFreeBuilderCount = 0, $iTotalBuilderCount = 0, $iGemAmount = 0 ; builder and gem amounts
 Global $iTestFreeBuilderCount = -1 ; used for test cases, -1 = disabled
-Global $g_iStatsStartedWith[$eLootCount] = [0,0,0,0]
-Global $g_iStatsTotalGain[$eLootCount] = [0,0,0,0]
-Global $g_iStatsLastAttack[$eLootCount] = [0,0,0,0]
-Global $g_iStatsBonusLast[$eLootCount] = [0,0,0,0]
-Global $iSkippedVillageCount, $iDroppedTrophyCount ; skipped village and dropped trophy counts
-Global $iCostGoldWall, $iCostElixirWall, $iCostGoldBuilding, $iCostElixirBuilding, $iCostDElixirHero ; wall, building and hero upgrade costs
-Global $iNbrOfWallsUppedGold, $iNbrOfWallsUppedElixir, $iNbrOfBuildingsUppedGold, $iNbrOfBuildingsUppedElixir, $iNbrOfHeroesUpped ; number of wall, building, hero upgrades with gold, elixir, delixir
-Global $iSearchCost, $iTrainCostElixir, $iTrainCostDElixir ; search and train troops cost
 Global $iNbrOfOoS ; number of Out of Sync occurred
-Global $iNbrOfTHSnipeFails, $iNbrOfTHSnipeSuccess ; number of fails and success while TH Sniping
-Global $iGoldFromMines, $iElixirFromCollectors, $iDElixirFromDrills ; number of resources gain by collecting mines, collectors, drills
-Global $iAttackedVillageCount[$g_iModeCount + 3] ; number of attack villages for DB, LB, TB, TS
-Global $iTotalGoldGain[$g_iModeCount + 3], $iTotalElixirGain[$g_iModeCount + 3], $iTotalDarkGain[$g_iModeCount + 3], $iTotalTrophyGain[$g_iModeCount + 3] ; total resource gains for DB, LB, TB, TS
-Global $iNbrOfDetectedMines[$g_iModeCount + 3], $iNbrOfDetectedCollectors[$g_iModeCount + 3], $iNbrOfDetectedDrills[$g_iModeCount + 3] ; number of mines, collectors, drills detected for DB, LB, TB
 Global $iAttackedCount = 0 ; convert to global from UpdateStats to enable daily attack limits
+
+
+;Global $g_iStatsStartedWith[$eLootCount] = [0,0,0,0] ; < - - - DocOc Mod
+;Global $g_iStatsTotalGain[$eLootCount] = [0,0,0,0] ; < - - - DocOc Mod
+;Global $g_iStatsLastAttack[$eLootCount] = [0,0,0,0] ; < - - - DocOc Mod
+;Global $g_iStatsBonusLast[$eLootCount] = [0,0,0,0] ; < - - - DocOc Mod
+;Global $iSkippedVillageCount, $iDroppedTrophyCount ; < - - - DocOc Mod ; skipped village and dropped trophy counts
+;Global $iSearchCost, $iTrainCostElixir, $iTrainCostDElixir  ; < - - - DocOc Mod ; search and train troops cost
+;Global $iGoldFromMines, $iElixirFromCollectors, $iDElixirFromDrills ; < - - - DocOc Mod; number of resources gain by collecting mines, collectors, drills
+;Global $iNbrOfWallsUppedGold, $iNbrOfWallsUppedElixir, $iNbrOfBuildingsUppedGold, $iNbrOfBuildingsUppedElixir, $iNbrOfHeroesUpped ; < - - - DocOc Mod ; number of wall, building, hero upgrades with gold, elixir, delixir
+;Global $iCostGoldWall, $iCostElixirWall, $iCostGoldBuilding, $iCostElixirBuilding, $iCostDElixirHero ; < - - - DocOc Mod ; wall, building and hero upgrade costs
+;Global $iAttackedVillageCount[$g_iModeCount + 3] ; < - - - DocOc Mod ; number of attack villages for DB, LB, TB, TS
+;Global $iTotalGoldGain[$g_iModeCount + 3], $iTotalElixirGain[$g_iModeCount + 3], $iTotalDarkGain[$g_iModeCount + 3], $iTotalTrophyGain[$g_iModeCount + 3] ; < - - - DocOc Mod ; total resource gains for DB, LB, TB, TS
+;Global $iNbrOfDetectedMines[$g_iModeCount + 3], $iNbrOfDetectedCollectors[$g_iModeCount + 3], $iNbrOfDetectedDrills[$g_iModeCount + 3] ; < - - - DocOc Mod ; number of mines, collectors, drills detected for DB, LB, TB
+;Global $iNbrOfTHSnipeFails, $iNbrOfTHSnipeSuccess ; < - - - DocOc Mod ; number of fails and success while TH Sniping
+;Global $g_iSmartZapGain = 0, $g_iNumEQSpellsUsed = 0, $g_iNumLSpellsUsed = 0 ; < - - - DocOc Mod ; smart zap
+
+
 Global $SearchCount = 0 ;Number of searches
 Global Const $max_train_skip = 40
 Global $actual_train_skip = 0
-Global $g_iSmartZapGain = 0, $g_iNumEQSpellsUsed = 0, $g_iNumLSpellsUsed = 0 ; smart zap
 
 ; My village
 Global $iGoldCurrent = 0, $iElixirCurrent = 0, $iDarkCurrent = 0, $iTrophyCurrent = 0 ; current stats
@@ -1065,11 +1070,11 @@ Global $IMGLOCTHLEVEL
 Global $THusedKing = 0
 Global $THusedQueen = 0
 Global $THusedWarden = 0
-Global Const $TopLeft[5][2] = [[83, 306], [174, 238], [240, 188], [303, 142], [390, 76]]
-Global Const $TopRight[5][2] = [[466, 66], [556, 134], [622, 184], [684, 231], [775, 300]]
-Global Const $BottomLeft[5][2] = [[81, 363], [174, 434], [235, 481], [299, 530], [390, 600]]
-Global Const $BottomRight[5][2] = [[466, 590], [554, 523], [615, 477], [678, 430], [765, 364]]
-Global Const $Edges[4] = [$BottomRight, $TopLeft, $BottomLeft, $TopRight]
+;Global Const $TopLeft[5][2] = [[83, 306], [174, 238], [240, 188], [303, 142], [390, 76]]
+;Global Const $TopRight[5][2] = [[466, 66], [556, 134], [622, 184], [684, 231], [775, 300]]
+;Global Const $BottomLeft[5][2] = [[81, 363], [174, 434], [235, 481], [299, 530], [390, 600]]
+;Global Const $BottomRight[5][2] = [[466, 590], [554, 523], [615, 477], [678, 430], [765, 364]]
+;Global Const $Edges[4] = [$BottomRight, $TopLeft, $BottomLeft, $TopRight]
 Global $atkTroops[12][2] ;11 Slots of troops -  Name, Amount
 Global $fullArmy ;Check for full army or not
 Global Const $useAllTroops[33] = [$eBarb, $eArch, $eGiant, $eGobl, $eWall, $eBall, $eWiza, $eHeal, $eDrag, $ePekk, $eBabyD, $eMine, $eMini, $eHogs, $eValk, $eGole, $eWitc, $eLava, $eBowl, $eKing, $eQueen, $eWarden, $eCastle, $eLSpell, $eHSpell, $eRSpell, $eJSpell, $eFSpell, $eCSpell, $ePSpell, $eESpell, $eHaSpell]
@@ -1313,3 +1318,7 @@ Global Const $g_aLSpellDmg[7] = [300, 330, 360, 390, 450, 510, 570]
 Global Const $g_aEQSpellDmg[4] = [0.14, 0.17, 0.21, 0.25]
 ; Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350] ; Total Amount of DE available from Drill at each level (1-6)
 ; Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479] ; Amount of DE available to steal from Drills at each level (1-6)
+
+; #######################################################################
+; Doc Oc MOD
+#include "MOD_DocOc\Globals DocOC.au3"
